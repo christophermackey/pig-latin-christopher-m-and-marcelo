@@ -9,7 +9,7 @@ class App extends Component{
     this.state = {
       // "phrase" is the text entered by the user - right now there are test words hard coded to make the process of testing your code faster and easier
       // ACTION ITEM: when you are ready for your full user experience, delete the test words so phrase is assigned an empty string
-      phrase: "alpha through yummy squeal queen fry",
+      phrase: "",
       // "phraseTranslated" is what the user will see appear on the page as Pig Latin, it starts as the preset message and updates when your user clicks the "submit" button
       phraseTranslated: "This is where your translated sentence will appear."
     }
@@ -17,10 +17,28 @@ class App extends Component{
 
   // The "myPigLatinCodeHere" function is where you will put your logic to convert the sentence entered by the user to Pig Latin
   myPigLatinCodeHere = () => {
+
+    // FILTER OUT THE PUNCTUATIONS
+    //1. Declare a variable (rawUserInputArray) and store the user input splited by each character (.split('')). 
+    //2. declare a variable (formatedUserInputArray). filter the rawUserInputArray array to return an array with no punctuation. 
+    //3. declare a variable (formatedUserInput) and store the value of result of joining the formatedUserInputArray into one string (.join(''))
+    //4. assign to the userInput variable (this variale is what is being used in the rest of the code) the value of the formatedUserInput.split(' '), which takes the spaces into consideration and will split the string into an array of words.
+
+    let rawUserInputArray = this.state.phrase.split("")
+    let formatedUserInputArray = rawUserInputArray.filter((letter) => {
+      return letter !== '!' && letter !== '?' && letter !== ',' && letter !== '.' && letter !== "'" && letter !== "-"
+    })
+    console.log(rawUserInputArray)
+
+    let formatedUserInput = formatedUserInputArray.join("")
+    console.log(formatedUserInput)
+
     // the variable "userInput" will contain the text input from the user modified into an array of words
     // no need to change this variable
-    let userInput = this.state.phrase.split(" ")
+    let userInput = formatedUserInput.split(" ")
     console.log("userInput:", userInput)
+
+    /// Use filter on user input to filter out all of the punctuations. And store new array in noPunctuationUserInput variable
 
     // now that we have an array of words, we can map over the array and access each word
     let translatedWordsArray = userInput.map(currentWord => {
@@ -47,24 +65,31 @@ class App extends Component{
       
       let myVariable = '';
 
-      if(currentWord[0] === "a" || currentWord[0] === "e" || currentWord[0] === "i" || currentWord[0] === "o" || currentWord[0] === "u") {
+      if (currentWord === '') {
+        console.log('Please write something!')
+        myVariable = 'Please write something!'
+      } else if(currentWord[0] === "a" || currentWord[0] === "e" || currentWord[0] === "i" || currentWord[0] === "o" || currentWord[0] === "u") {
         console.log(`${currentWord}way`);
-        return `${currentWord}way`
+        myVariable = `${currentWord}way`
+        // return `${currentWord}way`
       } else if(currentWord.startsWith("qu")){
         console.log(`${currentWord.slice(2)}quay`)
-        return `${currentWord.slice(2)}quay` 
+        myVariable = `${currentWord.slice(2)}quay` 
+        // return `${currentWord.slice(2)}quay` 
       } else if(vowelsArray.length === 0){
         let yPosition = currentWord.indexOf("y")
         console.log("index of y", yPosition);
-        return `${currentWord.slice(yPosition)}${currentWord.slice(0, yPosition)}ay`
+        myVariable = `${currentWord.slice(yPosition)}${currentWord.slice(0, yPosition)}ay`
+        // return `${currentWord.slice(yPosition)}${currentWord.slice(0, yPosition)}ay`
       } else {
         let firstVowelIndex = currentWord.indexOf(vowelsArray[0])
         console.log("INDEX VALUE", currentWord.indexOf(vowelsArray[0]));
-        return `${currentWord.slice(firstVowelIndex)}${currentWord.slice(0, firstVowelIndex)}ay`
+        myVariable = `${currentWord.slice(firstVowelIndex)}${currentWord.slice(0, firstVowelIndex)}ay`
+        // return `${currentWord.slice(firstVowelIndex)}${currentWord.slice(0, firstVowelIndex)}ay`
       }
       
       // ACTION ITEM: change the value of currentWord to the name of whatever variable you made containing your Pig Latin'd word
-      return currentWord
+      return myVariable
     })
 
 
@@ -82,7 +107,7 @@ class App extends Component{
     // this method restarts the game by setting the original state
     // ACTION ITEM: when you are ready for your full user experience, delete the test words in phrase so that is assigned an empty string
     this.setState({
-      phrase: "alpha through yummy squeal queen fry",
+      phrase: "",
       phraseTranslated: "This is where your translated sentence will appear."
     })
   }
@@ -120,9 +145,22 @@ class App extends Component{
           />
           <br />
           {/* button that called the setUpPreventDefault method which calls the myPigLatinCodeHere method */}
-          <button onClick={this.setUpPreventDefault}>Submit</button>
+
+          {/* <button onClick={this.setUpPreventDefault}>Submit</button> */}
+          <div onClick={this.setUpPreventDefault} className="bacon">
+            <div className="red"></div>
+            <div className="white"></div>
+            <div className="red"></div>
+            <div className="bubble1"></div>
+            <div className="bubble2"></div>
+          </div>
           <button onClick={this.restartGame}>Clear</button>
         </div>
+        {/* Bacon Button!! */}
+  
+         
+
+
         <p>{this.state.phraseTranslated}</p>
         <footer>Coded by ~your name here~</footer>
       </>

@@ -16,7 +16,6 @@ class App extends Component{
   }
 
   // The "myPigLatinCodeHere" function is where you will put your logic to convert the sentence entered by the user to Pig Latin
-
   myPigLatinCodeHere = () => {
     // the variable "userInput" will contain the text input from the user modified into an array of words
     // no need to change this variable
@@ -28,16 +27,45 @@ class App extends Component{
       // ACTION ITEM: use "currentWord" as a starting point for your code
       console.log("currentWord:", currentWord)
 
-      let vowelsArray = currentWord.split("").filter(vowel => {
+      // let vowelsArray = currentWord.split("").filter(vowel => {
+      //   return vowel === "a" || vowel === "e" || vowel === "i" || vowel === "o" || vowel === "u"
+      // })
+      let vowelsArray = currentWord.split("").filter((vowel, index)=> {
+        console.log("index of vowel", index);
         return vowel === "a" || vowel === "e" || vowel === "i" || vowel === "o" || vowel === "u"
       })
       console.log("vowelsArray:", vowelsArray)
-
+      console.log("number of elements in array", vowelsArray.length)
       // your code here!
-
       // Remember: console.log is your friend :)
 
-
+      //Psuedo code:
+      //1.check if word starts with a vowel
+      //if it does, add "way"
+      //2.else if, word begins with one or more consonants && begins with "qu", move "qu" and shift letters before non-"u" vowel to the end
+      //3.else if, word begins with one or more consonants ("throw") -> ("owthray") identify first vowel
+      // shift letters before first vowel to the end
+      //4. if word does not have any regualr vowel (a, e, i, o, u), && word has "y", move consonants before "y" to the end and concat "ay"
+      
+      if(currentWord[0] === "a" || currentWord[0] === "e" || currentWord[0] === "i" || currentWord[0] === "o" || currentWord[0] === "u") {
+        console.log(`${currentWord}way`);
+        return `${currentWord}way`
+      } else if(currentWord.startsWith("qu")){
+        console.log(`${currentWord} 123`)
+        return `${currentWord.slice(2)}quay` 
+      } else if(vowelsArray.length === 0){
+        let yPosition = currentWord.indexOf("y")
+        console.log("index of y", yPosition);
+        return `${currentWord.slice(yPosition)}${currentWord.slice(0, yPosition)}ay`
+      } else {
+        let firstVowelIndex = currentWord.indexOf(vowelsArray[0])
+        console.log("INDEX VALUE", currentWord.indexOf(vowelsArray[0]));
+        return `${currentWord.slice(firstVowelIndex)}${currentWord.slice(0, firstVowelIndex)}ay`
+      }
+      // } else if(currentWord[0] !== "a" || currentWord[0] !== "e" || currentWord[0] !== "i" || currentWord[0] !== "o" || currentWord[0] !== "u") {
+      //   console.log("INDEX VALUE", currentWord.indexOf(vowelsArray[0]));
+      // }
+      
       // ACTION ITEM: change the value of currentWord to the name of whatever variable you made containing your Pig Latin'd word
       return currentWord
     })

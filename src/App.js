@@ -40,18 +40,18 @@ class App extends Component{
       // Remember: console.log is your friend :)
 
       //Psuedo code:
-      //1.check if word starts with a vowel
-      //if it does, add "way"
-      //2.else if, word begins with one or more consonants && begins with "qu", move "qu" and shift letters before non-"u" vowel to the end
-      //3.else if, word begins with one or more consonants ("throw") -> ("owthray") identify first vowel
-      // shift letters before first vowel to the end
-      //4. if word does not have any regualr vowel (a, e, i, o, u), && word has "y", move consonants before "y" to the end and concat "ay"
+      //1.check if word starts with a vowel - access the first element (index = 0) from the currentWord (element of array --> string) and check if it is equal a vowel -- if it equal to a vowel, return the current word 'concatenated' with way in the end
+      //2. else if currentWord starts with 'qu' (tyr to use the .startsWith() built in method) --> return the portion of the after 'qu' concatenated with 'quay'
+      //3. else if -- find if the vowel array is equal to zero (are there any vowels in this string element??!!!!) ---> if the vowels array is empty (vowelArray.length === 0), we assume that thare are no vowels an this implies that y will be the only vowel in the string. --> declare a variable yPosition and store the index of the first instance of y in the string (.indexOf()). Use the slice method to return the subset of the stringthat begins with y and concatenate with the subset of the string from the 0 index to the index of the character before 'y' and 'ay'.
+      //4. If none of the previous conditions are met, the current word (element) starts with a consonant and not a vowel, but also has vowels after the first consonant. Declare a variable and store the index of the first vowel of the currentWord (accessed the first element in the vowelsArray) used indexOf('that first element') on our currentWord -> this will give us the position of the character in the string ---> Use the slice method to return the subset of the string that begins with the index of the first vowel (store in the firstVowelIndex variable) and concatenate with the subset of the string from the 0 index to the index of the character before the first vowel and 'ay'.
       
+      let myVariable = '';
+
       if(currentWord[0] === "a" || currentWord[0] === "e" || currentWord[0] === "i" || currentWord[0] === "o" || currentWord[0] === "u") {
         console.log(`${currentWord}way`);
         return `${currentWord}way`
       } else if(currentWord.startsWith("qu")){
-        console.log(`${currentWord} 123`)
+        console.log(`${currentWord.slice(2)}quay`)
         return `${currentWord.slice(2)}quay` 
       } else if(vowelsArray.length === 0){
         let yPosition = currentWord.indexOf("y")
@@ -62,9 +62,6 @@ class App extends Component{
         console.log("INDEX VALUE", currentWord.indexOf(vowelsArray[0]));
         return `${currentWord.slice(firstVowelIndex)}${currentWord.slice(0, firstVowelIndex)}ay`
       }
-      // } else if(currentWord[0] !== "a" || currentWord[0] !== "e" || currentWord[0] !== "i" || currentWord[0] !== "o" || currentWord[0] !== "u") {
-      //   console.log("INDEX VALUE", currentWord.indexOf(vowelsArray[0]));
-      // }
       
       // ACTION ITEM: change the value of currentWord to the name of whatever variable you made containing your Pig Latin'd word
       return currentWord

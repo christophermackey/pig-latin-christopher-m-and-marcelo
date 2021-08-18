@@ -162,7 +162,7 @@ class App extends Component{
 
 
         <p>{this.state.phraseTranslated}</p>
-        <footer>Coded by ~your name here~</footer>
+        <footer>Coded by Chris and Marcelo</footer>
       </>
     )
   }
